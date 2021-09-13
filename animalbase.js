@@ -24,6 +24,7 @@ function start() {
 
 function getButtonChoice() {
   document.querySelectorAll(".filter").forEach((button) => button.addEventListener("click", selectFilter));
+  document.querySelectorAll('[data-action="sort"]').forEach((button) => button.addEventListener("click", selectSort));
 }
 
 async function loadJSON() {
@@ -56,6 +57,12 @@ function preapareObject(jsonObject) {
 function selectFilter(event) {
   const filter = event.target.dataset.filter;
   filterList(filter);
+}
+
+function selectSort(event) {
+  const sort = event.target.dataset.sort;
+  sortList(sort);
+  console.log(sort);
 }
 
 function filterList(animalType) {
@@ -93,6 +100,54 @@ function onlyDogs(animal) {
 function all(animal) {
   if (animal.type === "") {
     return true;
+  }
+}
+
+function sortList(sortChoice) {
+  let sortedList = allAnimals;
+
+  if (sortChoice === "name") {
+    sortedList = sortedList.sort(sortName);
+  } else if (sortChoice === "type") {
+    sortedList = sortedList.sort(sortType);
+  } else if (sortChoice === "desc") {
+    sortedList = sortedList.sort(sortDescription);
+  } else if (sortChoice === "age") {
+    sortedList = sortedList.sort(sortAge);
+  }
+
+  displayList(sortedList);
+}
+
+function sortName(a, b) {
+  if (a.name < b.name) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+function sortType(a, b) {
+  if (a.type < b.type) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+function sortDescription(a, b) {
+  if (a.desc < b.desc) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+function sortAge(a, b) {
+  if (a.age < b.age) {
+    return -1;
+  } else {
+    return 1;
   }
 }
 
